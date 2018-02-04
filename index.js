@@ -1,10 +1,12 @@
+'use strict';
+
 const print = console.log;
 
 // Module to print dates
 const dateModule = require('./modules/date.js');
 
-console.log(dateModule.now());
-console.log(dateModule.format());
+print(dateModule.now());
+print(dateModule.format());
 
 // fancy-log: https://www.npmjs.com/package/fancy-log
 const fancyLog = require('fancy-log');
@@ -23,7 +25,7 @@ fancyLog.dir(whoami);
 // Chalk: https://www.npmjs.com/package/chalk
 const chalk = require('./modules/chalk.js');
 
-chalk.printOk("^_^'");
+chalk.printOk("\t\t ^_^'");
 
 // Npmlog: https://github.com/npm/npmlog
 const npmlog = require('./modules/npmlog.js');
@@ -48,3 +50,45 @@ npmlog.configure({
 
 npmlog.info("Something @ info level");
 npmlog.error("Something @ ERROR level");
+
+
+
+// Winston: https://www.npmjs.com/package/winston
+const winston = require('winston');
+const logDir = './logs';
+
+// Create the log directory if it does not exist
+const fs = require('fs');
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+
+const logger = new(winston.Logger)({
+  transports: [
+    new(winston.transports.Console)({
+      level: 'debug',
+      colorize: true, // colorize the output to the console
+      timestamp: () => (new Date().toLocaleTimeString())
+    }),
+    // print higher severity log to file
+    new(winston.transports.File)({
+      level: 'warn',
+      timestamp: () => (new Date().toLocaleTimeString()),
+      filename: `${logDir}/winston-log.log`,
+      json: false,
+      formatter: function (entry) {
+        let output = `[${entry.level.toUpperCase()}] - ${entry.timestamp()} - `;
+        output += entry.message ? entry.message : '';
+        output += (entry.meta && Object.keys(entry.meta).length) ? JSON.stringify(entry.meta) : '';
+        return output;
+      }
+    })
+  ]
+});
+
+// Ready to use:
+logger.debug('Debugging purpose');
+logger.info(`Let me check this ${chalk.blue('info')}`);
+
+logger.warn("Don't worry: it's just a warning ...");
+logger.error("Houston, we've got a problem ...");
