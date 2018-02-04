@@ -17,7 +17,7 @@ var configure = options => {
   log.headingStyle = options.headingStyle; // {Object} style for heading
   log.prefix = options.prefix || ''; // {String} prefix for each line
   log.prefixStyle = options.prefixStyle; // {Object} style for prefix
-  log.useFile = options.useFile || 'false'; // {Boolean} write log to file
+  log.useFile = options.useFile || false; // {Boolean} write log to file
   log.filename = options.filename || 'log.txt'; // {String} filename to write
 }
 
@@ -51,7 +51,7 @@ var logger = (level, prefix = log.prefix, message) => {
     log.error(prefix, message)
   else return;
 
-  if (log.useFile == true) fileWrite();
+  if (log.useFile) fileWrite();
 }
 
 var fileWrite = () => {
