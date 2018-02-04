@@ -1,0 +1,27 @@
+{
+  "name": "gulp-plugins",
+  "version": "1.0.0",
+  "description": "A simple project to test a couple of gulp plugins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "plugins",
+    "test"
+  ],
+  "author": "Andrea Trogolo",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.5.0"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "date-format": "^1.2.0",
+    "fancy-log": "^1.3.2",
+    "npmlog": "^4.1.2",
+    "npmlog-file": "^0.1.4"
+  }
+}

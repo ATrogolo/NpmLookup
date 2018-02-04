@@ -1,0 +1,2 @@
+0 info abc Something @ info level
+1 error abc Something @ ERROR level
